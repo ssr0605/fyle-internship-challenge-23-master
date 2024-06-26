@@ -1,30 +1,147 @@
-# fyle-internship-challenge-23-master
-I HAVE USED ANGULAR NODE JS TO DEVELOP AN SPA(SINGLE PAGE APPLICATION) USING GITHUB USER NAME AS INPUT AND DISPLAY THE PUBLIC GITHUB REPOSITORY  BELONGIN TO THE USER.
-# MyFirstProject
+# <img src="docs_app/assets/Rx_Logo_S.png" alt="RxJS Logo" width="86" height="86"> RxJS: Reactive Extensions For JavaScript
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.5.
+[![CircleCI](https://circleci.com/gh/ReactiveX/rxjs/tree/6.x.svg?style=svg)](https://circleci.com/gh/ReactiveX/rxjs/tree/6.x)
+[![npm version](https://badge.fury.io/js/%40reactivex%2Frxjs.svg)](http://badge.fury.io/js/%40reactivex%2Frxjs)
+[![Join the chat at https://gitter.im/Reactive-Extensions/RxJS](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Reactive-Extensions/RxJS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## Development server
+# RxJS 6 Stable
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### MIGRATION AND RELEASE INFORMATION:
 
-## Code scaffolding
+Find out how to update to v6, **automatically update your TypeScript code**, and more!
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- [Current home is MIGRATION.md](./docs_app/content/guide/v6/migration.md)
 
-## Build
+### FOR V 5.X PLEASE GO TO [THE 5.0 BRANCH](https://github.com/ReactiveX/rxjs/tree/5.x)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Reactive Extensions Library for JavaScript. This is a rewrite of [Reactive-Extensions/RxJS](https://github.com/Reactive-Extensions/RxJS) and is the latest production-ready version of RxJS. This rewrite is meant to have better performance, better modularity, better debuggable call stacks, while staying mostly backwards compatible, with some breaking changes that reduce the API surface.
 
-## Running unit tests
+[Apache 2.0 License](LICENSE.txt)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Contribution Guidelines](CONTRIBUTING.md)
+- [Maintainer Guidelines](doc_app/content/maintainer-guidelines.md)
+- [API Documentation](https://rxjs.dev/)
 
-## Running end-to-end tests
+## Versions In This Repository
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- [master](https://github.com/ReactiveX/rxjs/commits/master) - This is all of the current, unreleased work, which is against v6 of RxJS right now
+- [stable](https://github.com/ReactiveX/rxjs/commits/stable) - This is the branch for the latest version you'd get if you do `npm install rxjs`
 
-## Further help
+## Important
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+By contributing or commenting on issues in this repository, whether you've read them or not, you're agreeing to the [Contributor Code of Conduct](CODE_OF_CONDUCT.md). Much like traffic laws, ignorance doesn't grant you immunity.
 
+## Installation and Usage
+
+### ES6 via npm
+
+```sh
+npm install rxjs
+```
+
+It's recommended to pull in the Observable creation methods you need directly from `'rxjs'` as shown below with `range`. And you can pull in any operator you need from one spot, under `'rxjs/operators'`.
+
+```ts
+import { range } from "rxjs";
+import { map, filter } from "rxjs/operators";
+
+range(1, 200)
+  .pipe(
+    filter(x => x % 2 === 1),
+    map(x => x + x)
+  )
+  .subscribe(x => console.log(x));
+```
+
+Here, we're using the built-in `pipe` method on Observables to combine operators. See [pipeable operators](https://github.com/ReactiveX/rxjs/blob/master/doc/pipeable-operators.md) for more information.
+
+### CommonJS via npm
+
+To install this library for CommonJS (CJS) usage, use the following command:
+
+```sh
+npm install rxjs
+```
+
+(Note: destructuring available in Node 8+)
+
+```js
+const { range } = require('rxjs');
+const { map, filter } = require('rxjs/operators');
+
+range(1, 200).pipe(
+  filter(x => x % 2 === 1),
+  map(x => x + x)
+).subscribe(x => console.log(x));
+```
+
+### CDN
+
+For CDN, you can use [unpkg](https://unpkg.com/):
+
+https://unpkg.com/rxjs/bundles/rxjs.umd.min.js
+
+The global namespace for rxjs is `rxjs`:
+
+```js
+const { range } = rxjs;
+const { map, filter } = rxjs.operators;
+
+range(1, 200)
+  .pipe(
+    filter(x => x % 2 === 1),
+    map(x => x + x)
+  )
+  .subscribe(x => console.log(x));
+```
+
+## Goals
+
+- Smaller overall bundles sizes
+- Provide better performance than preceding versions of RxJS
+- To model/follow the [Observable Spec Proposal](https://github.com/zenparsing/es-observable) to the observable
+- Provide more modular file structure in a variety of formats
+- Provide more debuggable call stacks than preceding versions of RxJS
+
+## Building/Testing
+
+- `npm run build_all` - builds everything
+- `npm test` - runs tests
+- `npm run test_no_cache` - run test with `ts-node` set to false
+
+## Performance Tests
+
+Run `npm run build_perf` or `npm run perf` to run the performance tests with `protractor`.
+
+Run `npm run perf_micro [operator]` to run micro performance test benchmarking operator.
+
+## Adding documentation
+
+We appreciate all contributions to the documentation of any type. All of the information needed to get the docs app up and running locally as well as how to contribute can be found in the [documentation directory](./docs_app).
+
+## Generating PNG marble diagrams
+
+The script `npm run tests2png` requires some native packages installed locally: `imagemagick`, `graphicsmagick`, and `ghostscript`.
+
+For Mac OS X with [Homebrew](http://brew.sh/):
+
+- `brew install imagemagick`
+- `brew install graphicsmagick`
+- `brew install ghostscript`
+- You may need to install the Ghostscript fonts manually:
+  - Download the tarball from the [gs-fonts project](https://sourceforge.net/projects/gs-fonts)
+  - `mkdir -p /usr/local/share/ghostscript && tar zxvf /path/to/ghostscript-fonts.tar.gz -C /usr/local/share/ghostscript`
+
+For Debian Linux:
+
+- `sudo add-apt-repository ppa:dhor/myway`
+- `apt-get install imagemagick`
+- `apt-get install graphicsmagick`
+- `apt-get install ghostscript`
+
+For Windows and other Operating Systems, check the download instructions here:
+
+- http://imagemagick.org
+- http://www.graphicsmagick.org
+- http://www.ghostscript.com/
